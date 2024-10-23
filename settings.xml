@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+    <localRepository>/Users/muxiaohui/.m2/repository</localRepository>
+    <pluginGroups>
+    </pluginGroups>
+
+    <proxies>
+    </proxies>
+
+    <servers>
+
+        <server>
+            <id>nexus-releases</id>
+            <username>admin</username>
+            <password>RTRL@2020</password>
+        </server>
+
+        <server>
+            <id>nexus-snapshots</id>
+            <username>admin</username>
+            <password>RTRL@2020</password>
+        </server>
+
+    </servers>
+
+    <!-- mirrors
+     | This is a list of mirrors to be used in downloading artifacts from remote repositories.
+     |
+     | It works like this: a POM may declare a repository to use in resolving certain artifacts.
+     | However, this repository may have problems with heavy traffic at times, so people have mirrored
+     | it to several places.
+     |
+     | That repository definition will have a unique id, so we can create a mirror reference for that
+     | repository, to be used as an alternate download site. The mirror site will be the preferred
+     | server for that repository.
+     |-->
+    <mirrors>
+        <mirror>
+            <id>nexus-aliyun</id>
+            <mirrorOf>central</mirrorOf>
+            <name>Nexus aliyun</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+        </mirror>
+    </mirrors>
+    <profiles>
+
+        <profile>
+            <id>default_profile</id>
+            <repositories>
+                <!--包含需要连接到远程仓库的信息 -->
+                <repository>
+                    <!--远程仓库唯一标识 -->
+                    <id>rmpl_repo</id>
+                    <!--远程仓库名称 -->
+                    <name>rmpl_repo</name>
+                    <!--如何处理远程仓库里发布版本的下载 -->
+                    <releases>
+                        <!--true或者false表示该仓库是否为下载某种类型构件（发布版，快照版）开启。 -->
+                        <enabled>true</enabled>
+                        <!--该元素指定更新发生的频率。Maven会比较本地POM和远程POM的时间戳。这里的选项是：always（一直），daily（默认，每日），interval：X（这里X是以分钟为单位的时间间隔），或者never（从不）。 -->
+                        <updatePolicy>never</updatePolicy>
+                        <!--当Maven验证构件校验文件失败时该怎么做-ignore（忽略），fail（失败），或者warn（警告）。 -->
+                        <checksumPolicy>warn</checksumPolicy>
+                    </releases>
+                    <!--如何处理远程仓库里快照版本的下载。有了releases和snapshots这两组配置，POM就可以在每个单独的仓库中，为每种类型的构件采取不同的策略。例如，可能有人会决定只为开发目的开启对快照版本下载的支持。参见repositories/repository/releases元素 -->
+                    <snapshots>
+                        <!--true或者false表示该仓库是否为下载某种类型构件（发布版，快照版）开启。 -->
+                        <enabled>true</enabled>
+                        <!--该元素指定更新发生的频率。Maven会比较本地POM和远程POM的时间戳。这里的选项是：always（一直），daily（默认，每日），interval：X（这里X是以分钟为单位的时间间隔），或者never（从不）。 -->
+                        <updatePolicy>always</updatePolicy>
+                        <!--当Maven验证构件校验文件失败时该怎么做-ignore（忽略），fail（失败），或者warn（警告）。 -->
+                        <checksumPolicy>warn</checksumPolicy>
+                    </snapshots>
+                    <!--远程仓库URL，按protocol://hostname/path形式 -->
+                    <url>http://47.94.136.7:8081/repository/maven-public/</url>
+                    <!--用于定位和排序构件的仓库布局类型-可以是default（默认）或者legacy（遗留）。Maven 2为其仓库提供了一个默认的布局；然而，Maven 1.x有一种不同的布局。我们可以使用该元素指定布局是default（默认）还是legacy（遗留）。 -->
+                    <layout>default</layout>
+                </repository>
+            </repositories>
+
+            <pluginRepositories>
+                <pluginRepository>
+                    <id>maven-net-cn</id>
+                    <name>Maven China Mirror</name>
+                    <url>http://47.94.136.7:8081/repository/maven-public/</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </pluginRepository>
+            </pluginRepositories>
+        </profile>
+    </profiles>
+    <activeProfiles>
+        <activeProfile>default_profile</activeProfile>
+    </activeProfiles>
+
+</settings>
